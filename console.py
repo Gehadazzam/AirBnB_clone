@@ -109,12 +109,12 @@ class HBNBCommand(cmd.Cmd):
         """Prints all string representation of all instances"""
 
         par = ar.split()
-        if len(par) < 2:
+        if len(par) < 1:
             """if it is just add print everything"""
             print([str(key) for key in storage.all().items()])
 
         else:
-            if not par[1] in HBNBCommand.cls:
+            if not par[0] in HBNBCommand.cls:
                 """if the word after all not a class name"""
                 print("** class doesn't exist **")
                 return
