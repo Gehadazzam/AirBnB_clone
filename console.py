@@ -57,7 +57,7 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     print(storage.all()[k])
 
-    def to_update(self, arg):
+    def do_update(self, arg):
         """Updates an instance adding or updating attribute"""
         if not arg:
             print("** class name missing **")
