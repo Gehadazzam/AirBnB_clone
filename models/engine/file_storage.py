@@ -3,13 +3,9 @@
 
 import datetime as dt
 from os.path import exists
-<<<<<<< HEAD
-from models.user import User
-=======
 import json
 import datetime
 import os
->>>>>>> g-feature
 
 class FileStorage:
     """class FileStorage that serializes and deserializes JSON file"""
@@ -41,13 +37,6 @@ class FileStorage:
                 FileStorage.__objects = l
         else:
             return
-<<<<<<< HEAD
-        
-    def cls(self):
-        """return a dictionery of classes"""
-        
-        return {"User": User}
-=======
 
     def class_dict(self):
         """to correctly serialize and deserialize instances of the new classes"""
@@ -107,4 +96,3 @@ class FileStorage:
                      "text": str}
         }
         return attribe
->>>>>>> g-feature
