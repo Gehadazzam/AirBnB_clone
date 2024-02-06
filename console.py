@@ -6,6 +6,7 @@ import cmd
 from models.base_model import BaseModel
 from models import storage
 
+
 class HBNBCommand(cmd.Cmd):
     """class to handle the program"""
 
@@ -33,12 +34,12 @@ class HBNBCommand(cmd.Cmd):
         """Creates a new instance of BaseModel"""
         if not arg:
             print("** class name missing **")
-        elif arg not in {'BaseModel'}:
+        elif arg not in self.cls:
             print ("** class doesn't exist **")
         else:
-            i = BaseModel()
-            i.save()
-            print(i.id)
+            new_instance = BaseModel()
+            new_instance.save()
+            print(new_instance.id)
 
     def do_show(self, arg):
         """Prints the string representation the class name and id"""
@@ -46,7 +47,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         else:
             w = arg.split()
-            if w[0] not in {'BaseModel'}:
+            if w[0] not in self.cls:
                 print ("** class doesn't exist **")
             elif len(w) < 2:
                 print("** instance id missing **")
@@ -63,7 +64,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         else:
             w = arg.split()
-            if w[0] not in {'BaseModel'}:
+            if w[0] not in self.cls:
                 print ("** class doesn't exist **")
             elif len(w) < 2:
                 print("** instance id missing **")
@@ -78,48 +79,36 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     setattr(storage.all()[k], w[2], w[3])
                     storage.all()[k].save()
-    def do_destroy(self, ar):
+
+    def do_destroy(self, arg):
         """if the class exist destroy it"""
-
-        par = ar.split()
-        if not ar:
-            """just print a massage and return"""
-
+        if not arg:
             print("** class name missing **")
-            return
-        elif not par[0] in HBNBCommand.cls:
-            """check if the argument one of our cls"""
-
-            print("** class doesn't exist **")
-        elif not par[1]:
-            """check if the id is written"""
-
-            print("** instance id missing **")
-
         else:
-            k = par[0] + "." + par[1]
-            if k in storage.all():
-                """if it existes in the storage"""
-                storage.all().pop(k)
-                storage.save()
-            else:
-                print("** no instance found **")
-
-    def do_all(self, ar):
-        """Prints all string representation of all instances"""
-
-        par = ar.split()
-        if len(par) < 1:
-            """if it is just add print everything"""
-            print([str(key) for key in storage.all().items()])
-
-        else:
-            if not par[0] in HBNBCommand.cls:
-                """if the word after all not a class name"""
+            w = arg.split()
+            if w[0] not in self.cls:
                 print("** class doesn't exist **")
-                return
+            elif len(w) < 2:
+                print("** instance id missing **")
             else:
-                print([str(key) for key in storage.all().items()])
+                k = "{}.{}".format(w[0], w[1])
+                if k in storage.all():
+                    del storage.all()[k]
+                    storage.save()
+                else:
+                    print("** no instance found **")
+
+    def do_all(self, arg):
+        """Prints all string representation of all instances"""
+        if arg:
+            w = arg.split()
+            if w[0] not in self.cls:
+                print("** class doesn't exist **")
+            else:
+                print([str(v) for k, v in storage.all().items()
+                      if type(v).__name__ == w[0]])
+        else:
+            print([str(v) for k, v in storage.all().items()])
 
 
 if __name__ == "__main__":

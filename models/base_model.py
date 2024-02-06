@@ -11,12 +11,12 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """id / created_at / updated_at"""
-        if kwargs:
-            for g in kwargs:
-                if g == 'created_at' or g == 'updated_at':
-                    self.__dict__[g] = dt.strptime(kwargs[g], "%Y-%m-%dT%H:%M:%S.%f")
+        if kwargs is not None and kwargs != {}:
+            for k in kwargs:
+                if k == "created_at" or k == "updated_at":
+                    self.__dict__[k] = dt.strptime(kwargs[k], "%Y-%m-%dT%H:%M:%S.%f")
                 else:
-                    self.__dict__[g] = kwargs[g]
+                    self.__dict__[k] = kwargs[k]
         else:    
             self.id = str(uuid.uuid4())
             self.created_at = dt.now()
@@ -36,9 +36,9 @@ class BaseModel:
     
     def to_dict(self):
         """returns a dictionary containing all keys/values of __dict__ of the instance"""
-
         my_ob_dict = self.__dict__.copy()
         my_ob_dict["__class__"] = self.__class__.__name__
-        my_ob_dict["created_at"] = self.created_at.isoformat()
-        my_ob_dict["updated_at"] = self.updated_at.isoformat()
+        my_ob_dict["created_at"] = my_ob_dict["updated_at"].isoformat()
+        my_ob_dict["updated_at"] = my_ob_dict["updated_at"].isoformat()
         return my_ob_dict
+
