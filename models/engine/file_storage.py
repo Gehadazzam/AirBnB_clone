@@ -4,7 +4,7 @@
 import datetime as dt
 import json
 from os.path import exists
-
+from models.user import User
 
 class FileStorage:
     """class FileStorage that serializes and deserializes JSON file"""
@@ -34,3 +34,8 @@ class FileStorage:
                 self.__objects = l
         else:
             return
+        
+    def cls(self):
+        """return a dictionery of classes"""
+        
+        return {"User": User}
