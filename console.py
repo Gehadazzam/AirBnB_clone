@@ -11,8 +11,6 @@ class HBNBCommand(cmd.Cmd):
     """class to handle the program"""
 
     prompt = "(hbnb) "
-    # List of classes
-    cls = ["BaseModel", "User", "Place", "State", "City", "Amenity", "Review"]
 
     def do_quit(self, ar):
         """quit the command interpreter"""
@@ -34,12 +32,12 @@ class HBNBCommand(cmd.Cmd):
         """Creates a new instance of BaseModel"""
         if not arg:
             print("** class name missing **")
-        elif arg not in self.cls:
+        elif arg not in storage.class_dict():
             print ("** class doesn't exist **")
         else:
-            new_instance = BaseModel()
-            new_instance.save()
-            print(new_instance.id)
+            l = storage.class_dict()[arg]()
+            l.save()
+            print(l.id)
 
     def do_show(self, arg):
         """Prints the string representation the class name and id"""
@@ -47,7 +45,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         else:
             w = arg.split()
-            if w[0] not in self.cls:
+            if w[0] not in storage.class_dict():
                 print ("** class doesn't exist **")
             elif len(w) < 2:
                 print("** instance id missing **")
@@ -64,7 +62,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         else:
             w = arg.split()
-            if w[0] not in self.cls:
+            if w[0] not in storage.class_dict():
                 print ("** class doesn't exist **")
             elif len(w) < 2:
                 print("** instance id missing **")
@@ -86,7 +84,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         else:
             w = arg.split()
-            if w[0] not in self.cls:
+            if w[0] not in storage.class_dict():
                 print("** class doesn't exist **")
             elif len(w) < 2:
                 print("** instance id missing **")
@@ -102,7 +100,7 @@ class HBNBCommand(cmd.Cmd):
         """Prints all string representation of all instances"""
         if arg:
             w = arg.split()
-            if w[0] not in self.cls:
+            if w[0] not in storage.class_dict():
                 print("** class doesn't exist **")
             else:
                 print([str(v) for k, v in storage.all().items()
