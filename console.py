@@ -26,34 +26,36 @@ class HBNBCommand(cmd.Cmd):
             "EOF": self.do_EOF,
             "emptyline": self.emptyline,
         }
-        self.check_command(line, console_default)
+        self.check_command(line)
 
-    def check_command(self, line_command, console_default):
+    def check_command(self, line_command):
         """checks for valid command and prints help if needed"""
-        period = re.match(r"(\w+)\.(\w+)(?:\((.*?)\))?(?:\.(.*?))?(?:\.(.*?))?", line_command)
+        period = re.match(r"^(\w*)\.(\w+)(?:\(([^)]*)\))$", line_command)
         if period:
             class_name = period.group(1)
             method = period.group(2)
             id_arg = period.group(3)
-            attribute1 = period.group(4)
-            attribute2 = period.group(5)
-            if method and class_name:
-                if attribute1 and attribute2 and id_arg:
-                    if '"' in id_arg and '"' in attribute1 and '"' in attribute2:
-                        hack = (("{} {} {} {} {}").format(method, class_name, id_arg[1:-1], attribute1[1:-1], attribute2[1:-1]))
-                    else:
-                        hack = (("{} {} {} {} {}").format(method, class_name, id_arg, attribute1, attribute2))
-                elif id_arg:
+            if method == "update":
+                id_attribute, key_attribute, value_attribute = id_arg.split(sep=", ")
+                all = (("{} {} {} {} {}".format(
+                    method, class_name, id_attribute[1:-1], key_attribute[1:-1], value_attribute
+                    )))
+                self.onecmd(all)
+                return all
+            elif method != "update":
+                if id_arg and class_name:
                     if '"' in id_arg:
-                        hack = (("{} {} {}").format(method, class_name, id_arg[1:-1]))
+                        all = (("{} {} {}").format(method, class_name, id_arg[1:-1]))
                     else:
-                        hack = (("{} {} {}").format(method, class_name, id_arg))
+                        all = (("{} {} {}").format(method, class_name, id_arg))
                 else:
-                    hack = (("{} {}").format(method, class_name))
-                self.onecmd(hack)
-                return hack
+                    all = (("{} {}").format(method, class_name))
+                self.onecmd(all)
+                return all
             else:
                 print("*** Unknown syntax: {}".format(line_command))
+        else:
+            return line_command
 
     def do_quit(self, ar):
         """quit the command interpreter"""
@@ -104,21 +106,38 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print("** class name missing **")
         else:
-            w = arg.split()
-            if w[0] not in storage.class_dict():
+            pattern = r'^(\S+)(?:\s(\S+)(?:\s(\S+)(?:\s((?:"[^"]*")|(?:(\S)+)))?)?)?'
+            match = re.search(pattern, arg)
+            classname_attribute = match.group(1)
+            uid_attribute = match.group(2)
+            key_attribute = match.group(3)
+            value_attribute = match.group(4)
+            if not match:
+                print("** class name missing **")
+            if classname_attribute not in storage.class_dict():
                 print ("** class doesn't exist **")
-            elif len(w) < 2:
+            elif not uid_attribute:
                 print("** instance id missing **")
             else:
-                k = "{}.{}".format(w[0], w[1])
+                k = "{}.{}".format(classname_attribute, uid_attribute)
                 if k not in storage.all():
                     print("** no instance found **")
-                elif len(w) < 3:
+                elif not key_attribute:
                     print("** attribute name missing **")
-                elif len(w) < 4:
+                elif not value_attribute:
                     print("** value missing **")
                 else:
-                    setattr(storage.all()[k], w[2], w[3])
+                    attributes = storage.attribe()[classname_attribute]
+                    if key_attribute in attributes:
+                        value_attribute = attributes[key_attribute](value_attribute)
+                    if '"' in value_attribute:
+                        value_attribute = value_attribute[1:-1]
+                    else:
+                        if '.' in value_attribute:
+                            value_attribute = float(value_attribute)
+                        else:
+                            value_attribute = int(value_attribute)
+                    setattr(storage.all()[k], key_attribute, value_attribute)
                     storage.all()[k].save()
 
     def do_destroy(self, arg):
