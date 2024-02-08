@@ -5,12 +5,55 @@
 import cmd
 from models.base_model import BaseModel
 from models import storage
-
+import re
+import json
 
 class HBNBCommand(cmd.Cmd):
     """class to handle the program"""
 
     prompt = "(hbnb) "
+
+    def default(self, line):
+        """default action when there is no matching command"""
+        console_default = {
+            "create": self.do_create,
+            "show": self.do_show,
+            "update": self.do_update,
+            "destroy": self.do_destroy,
+            "all": self.do_all,
+            "quit": self.do_quit,
+            "count": self.do_count,
+            "EOF": self.do_EOF,
+            "emptyline": self.emptyline,
+        }
+        self.check_command(line, console_default)
+
+    def check_command(self, line_command, console_default):
+        """checks for valid command and prints help if needed"""
+        period = re.match(r"(\w+)\.(\w+)(?:\((.*?)\))?(?:\.(.*?))?(?:\.(.*?))?", line_command)
+        if period:
+            class_name = period.group(1)
+            method = period.group(2)
+            id_arg = period.group(3)
+            attribute1 = period.group(4)
+            attribute2 = period.group(5)
+            if method and class_name:
+                if attribute1 and attribute2 and id_arg:
+                    if '"' in id_arg and '"' in attribute1 and '"' in attribute2:
+                        hack = (("{} {} {} {} {}").format(method, class_name, id_arg[1:-1], attribute1[1:-1], attribute2[1:-1]))
+                    else:
+                        hack = (("{} {} {} {} {}").format(method, class_name, id_arg, attribute1, attribute2))
+                elif id_arg:
+                    if '"' in id_arg:
+                        hack = (("{} {} {}").format(method, class_name, id_arg[1:-1]))
+                    else:
+                        hack = (("{} {} {}").format(method, class_name, id_arg))
+                else:
+                    hack = (("{} {}").format(method, class_name))
+                self.onecmd(hack)
+                return hack
+            else:
+                print("*** Unknown syntax: {}".format(line_command))
 
     def do_quit(self, ar):
         """quit the command interpreter"""
@@ -108,6 +151,16 @@ class HBNBCommand(cmd.Cmd):
         else:
             print([str(v) for k, v in storage.all().items()])
 
+    def do_count(self, ar):
+        """retrive the number of instances of a class"""
+        par = ar.split()
+        if not par:
+            print("** class name missing **")
+        elif not par[0] in storage.class_dict():
+             print("** class doesn't exist **")
+        else:
+            count = [item for item in storage.all() if item.startswith(par[0] + '.')]
+            print(len(count))
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
