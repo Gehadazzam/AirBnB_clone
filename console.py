@@ -37,8 +37,12 @@ class HBNBCommand(cmd.Cmd):
             id_arg = period.group(3)
             if method == "update":
                 id_attribute, key_attribute, value_attribute = id_arg.split(sep=", ")
+                if '"' in id_attribute:
+                    id_attribute = id_attribute[1:-1]
+                if '"' in key_attribute:
+                    key_attribute = key_attribute[1:-1]
                 all = (("{} {} {} {} {}".format(
-                    method, class_name, id_attribute[1:-1], key_attribute[1:-1], value_attribute
+                    method, class_name, id_attribute, key_attribute, value_attribute
                     )))
                 self.onecmd(all)
                 return all
