@@ -7,7 +7,7 @@ from models.base_model import BaseModel
 from models import storage
 import re
 import json
-
+import ast
 class HBNBCommand(cmd.Cmd):
     """class to handle the program"""
 
@@ -27,7 +27,7 @@ class HBNBCommand(cmd.Cmd):
             "emptyline": self.emptyline,
         }
         self.check_command(line)
-
+#User.update("d2aeb18f-0a1a-4e2d-a4ba-557e1bdb4ebd", {'first_name': "John", 'age': 89})
     def check_command(self, line_command):
         """checks for valid command and prints help if needed"""
         period = re.match(r"^(\w*)\.(\w+)(?:\(([^)]*)\))$", line_command)
@@ -36,8 +36,31 @@ class HBNBCommand(cmd.Cmd):
             method = period.group(2)
             id_arg = period.group(3)
             if method == "update":
-                id_attribute, key_attribute, value_attribute = id_arg.split(sep=", ")
-                all = (("{} {} {} {} {}".format(
+                if '{' in id_arg:
+                    id_attribute, d, c = id_arg.split(sep=", ")
+                    if d and c:
+                        dic = d[1:]
+                        dic2 = c[:-1]
+                        key_attribute, value_attribute = dic.split(': ')
+                        key_attribute2, value_attribute2 = dic2.split(': ')
+                       # print(key_attribute)
+                        #print(value_attribute)
+                        #print(key_attribute2)
+                        #print(value_attribute2)
+                        a = (("{} {} {} {} {}".format(
+                    method, class_name, id_attribute[1:-1], key_attribute[1:-1], value_attribute, key_attribute2, value_attribute2
+                    )))
+                        b = (("{} {}").format(key_attribute2, value_attribute2))
+                        all = a + b
+                    else:
+                        dic = d[1:-1]
+                        key_attribute, value_attribute = dic.split(': ')
+                        all = (("{} {} {} {} {}".format(
+                    method, class_name, id_attribute[1:-1], key_attribute[1:-1], value_attribute
+                    )))
+                else:
+                    id_attribute, key_attribute, value_attribute = id_arg.split(sep=", ")
+                    all = (("{} {} {} {} {}".format(
                     method, class_name, id_attribute[1:-1], key_attribute[1:-1], value_attribute
                     )))
                 self.onecmd(all)
