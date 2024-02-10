@@ -17,6 +17,25 @@ from unittest.mock import patch
 class Test_HBNBCommand(unittest.TestCase):
     """test the command interpreter"""
 
+    @classmethod
+    def setUp(self):
+        try:
+            os.rename("file.json", "count")
+        except IOError:
+            pass
+        FileStorage._FileStorage__objects = {}
+
+    @classmethod
+    def tearDown(self):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        try:
+            os.rename("count", "file.json")
+        except IOError:
+            pass
+
     def test_help(self):
 
         with patch("sys.stdout", new=SO()) as test:
@@ -381,46 +400,118 @@ class Test_HBNBCommand(unittest.TestCase):
             output = "** class doesn't exist **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Amenity.create()"))
             self.assertFalse(HB().onecmd("Amenity.all()"))
             self.assertIn("Amenity", test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Amenity.create()"))
             self.assertFalse(HB().onecmd("all Amenity"))
             self.assertIn("Amenity", test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("BaseModel.create()"))
             self.assertFalse(HB().onecmd("BaseModel.all()"))
             self.assertIn("BaseModel", test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("BaseModel.create()"))
             self.assertFalse(HB().onecmd("all BaseModel"))
             self.assertIn("BaseModel", test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("City.create()"))
             self.assertFalse(HB().onecmd("City.all()"))
             self.assertIn("City", test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("City.create()"))
             self.assertFalse(HB().onecmd("all City"))
             self.assertIn("City", test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Place.create()"))
             self.assertFalse(HB().onecmd("Place.all()"))
             self.assertIn("Place", test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Place.create()"))
             self.assertFalse(HB().onecmd("all Place"))
             self.assertIn("Place", test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Review.create()"))
             self.assertFalse(HB().onecmd("Review.all()"))
             self.assertIn("Review", test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Review.create()"))
             self.assertFalse(HB().onecmd("all Review"))
             self.assertIn("Review", test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("State.create()"))
             self.assertFalse(HB().onecmd("State.all()"))
             self.assertIn("State", test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("State.create()"))
             self.assertFalse(HB().onecmd("all State"))
             self.assertIn("State", test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("User.create()"))
             self.assertFalse(HB().onecmd("User.all()"))
             self.assertIn("User", test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("User.create()"))
             self.assertFalse(HB().onecmd("all User"))
             self.assertIn("User", test.getvalue().strip())
+
+
+class TestCount(unittest.TestCase):
+    """for a count test"""
+    @classmethod
+    def setUp(self):
+        try:
+            os.rename("file.json", "count")
+        except IOError:
+            pass
+        FileStorage._FileStorage__objects = {}
+
+    @classmethod
+    def tearDown(self):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        try:
+            os.rename("count", "file.json")
+        except IOError:
+            pass
+    def test_count(self):
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Amenity.create()"))
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Amenity.count()"))
+            self.assertEqual('1', test.getvalue().strip())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("BaseModel.create()"))
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("BaseModel.count()"))
+            self.assertEqual('1', test.getvalue().strip())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("City.create()"))
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("City.count()"))
+            self.assertEqual('1', test.getvalue().strip())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Place.create()"))
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Place.count()"))
+            self.assertEqual('1', test.getvalue().strip())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Review.create()"))
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Review.count()"))
+            self.assertEqual('1', test.getvalue().strip())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("State.create()"))
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("State.count()"))
+            self.assertEqual('1', test.getvalue().strip())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("User.create()"))
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("User.count()"))
+            self.assertEqual('1', test.getvalue().strip())
 if __name__ == "__main__":
     unittest.main()
