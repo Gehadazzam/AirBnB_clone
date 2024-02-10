@@ -102,7 +102,44 @@ class Test_HBNBCommand(unittest.TestCase):
             self.assertFalse(HB().onecmd("USER.create()"))
             output = "** class doesn't exist **"
             self.assertEqual(output, test.getvalue().strip())
+        
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("User.create()"))
+            self.assertLess(0, len(test.getvalue().strip()))
+            test_cls = "User.{}".format(test.getvalue().strip())
+            self.assertIn(test_cls, storage.all().keys())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("BaseModel.create()"))
+            self.assertLess(0, len(test.getvalue().strip()))
+            test_cls = "BaseModel.{}".format(test.getvalue().strip())
+            self.assertIn(test_cls, storage.all().keys())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Amenity.create()"))
+            self.assertLess(0, len(test.getvalue().strip()))
+            test_cls = "Amenity.{}".format(test.getvalue().strip())
+            self.assertIn(test_cls, storage.all().keys())
 
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Place.create()"))
+            self.assertLess(0, len(test.getvalue().strip()))
+            test_cls = "Place.{}".format(test.getvalue().strip())
+            self.assertIn(test_cls, storage.all().keys())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Review.create()"))
+            self.assertLess(0, len(test.getvalue().strip()))
+            test_cls = "Review.{}".format(test.getvalue().strip())
+            self.assertIn(test_cls, storage.all().keys())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("City.create()"))
+            self.assertLess(0, len(test.getvalue().strip()))
+            test_cls = "City.{}".format(test.getvalue().strip())
+            self.assertIn(test_cls, storage.all().keys())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("State.create()"))
+            self.assertLess(0, len(test.getvalue().strip()))
+            test_cls = "State.{}".format(test.getvalue().strip())
+            self.assertIn(test_cls, storage.all().keys())
+        
     def test_show(self):
         with patch("sys.stdout", new=SO()) as test:
            self.assertFalse(HB().onecmd("show"))
@@ -180,6 +217,38 @@ class Test_HBNBCommand(unittest.TestCase):
             cmd = "State.show({})".format(id_attribute)
             self.assertFalse(HB().onecmd(cmd))
             self.assertNotIn(cls, storage.all())
+
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Amenity.show(2e3)"))
+            output = "** no instance found **"
+            self.assertEqual(output, test.getvalue().strip())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("BaseModel.show(2e3)"))
+            output = "** no instance found **"
+            self.assertEqual(output, test.getvalue().strip())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("City.show(2e3)"))
+            output = "** no instance found **"
+            self.assertEqual(output, test.getvalue().strip())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Place.show(2e3)"))
+            output = "** no instance found **"
+            self.assertEqual(output, test.getvalue().strip())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Review.show(2e3)"))
+            output = "** no instance found **"
+            self.assertEqual(output, test.getvalue().strip())
+
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("State.show(2e3)"))
+            output = "** no instance found **"
+            self.assertEqual(output, test.getvalue().strip())
+
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("User.show(2e3)"))
+            output = "** no instance found **"
+            self.assertEqual(output, test.getvalue().strip())
+
 
 
     def test_update(self):
@@ -275,7 +344,32 @@ class Test_HBNBCommand(unittest.TestCase):
             self.assertFalse(HB().onecmd("Amenity.destroy(2e3)"))
             output = "** no instance found **"
             self.assertEqual(output, test.getvalue().strip())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("BaseModel.destroy(2e3)"))
+            output = "** no instance found **"
+            self.assertEqual(output, test.getvalue().strip())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("City.destroy(2e3)"))
+            output = "** no instance found **"
+            self.assertEqual(output, test.getvalue().strip())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Place.destroy(2e3)"))
+            output = "** no instance found **"
+            self.assertEqual(output, test.getvalue().strip())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Review.destroy(2e3)"))
+            output = "** no instance found **"
+            self.assertEqual(output, test.getvalue().strip())
 
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("State.destroy(2e3)"))
+            output = "** no instance found **"
+            self.assertEqual(output, test.getvalue().strip())
+
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("User.destroy(2e3)"))
+            output = "** no instance found **"
+            self.assertEqual(output, test.getvalue().strip())
 
     def test_all(self):
         with patch("sys.stdout", new=SO()) as test:
