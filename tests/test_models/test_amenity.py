@@ -12,8 +12,8 @@ from time import sleep
 from models.amenity import Amenity as A
 from models.base_model import BaseModel as BM
 
-class testAmenity(unittest.TestCase):
 
+class testAmenity(unittest.TestCase):
     def testtype(self):
         ex1 = A()
         self.assertEqual(str(type(ex1)), "<class 'models.amenity.Amenity'>")
@@ -22,13 +22,12 @@ class testAmenity(unittest.TestCase):
         self.assertEqual(str, type(A().id))
         self.assertEqual(dt, type(A().created_at))
         self.assertEqual(dt, type(A().updated_at))
-    
+
     def testmethods(self):
         ex2 = A()
         new_ex2 = ex2.updated_at
         ex2.save()
         self.assertLess(new_ex2, ex2.updated_at)
-        
 
 
 if __name__ == "__main__":

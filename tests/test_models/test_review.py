@@ -12,8 +12,8 @@ from time import sleep
 from models.review import Review as r
 from models.base_model import BaseModel as BM
 
-class ReviewTest(unittest.TestCase):
 
+class ReviewTest(unittest.TestCase):
     def testtype(self):
         ex1 = r()
         self.assertEqual(str(type(ex1)), "<class 'models.review.Review'>")
@@ -22,7 +22,7 @@ class ReviewTest(unittest.TestCase):
         self.assertEqual(str, type(r().id))
         self.assertEqual(dt, type(r().created_at))
         self.assertEqual(dt, type(r().updated_at))
-        
+
     def testmethods(self):
         ex2 = r()
         new_ex2 = ex2.updated_at
@@ -32,4 +32,3 @@ class ReviewTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-        

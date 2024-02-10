@@ -63,10 +63,10 @@ class TestUserMethods(unittest.TestCase):
         dt = datetime.today()
         user.created_at = user.updated_at = dt
         expected_dict = {
-            'id': '123456',
-            '__class__': 'User',
-            'created_at': dt.isoformat(),
-            'updated_at': dt.isoformat(),
+            "id": "123456",
+            "__class__": "User",
+            "created_at": dt.isoformat(),
+            "updated_at": dt.isoformat(),
         }
         self.assertDictEqual(user.to_dict(), expected_dict)
 
@@ -86,4 +86,3 @@ class TestUserMethods(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

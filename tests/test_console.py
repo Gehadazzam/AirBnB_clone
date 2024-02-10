@@ -37,81 +37,81 @@ class Test_HBNBCommand(unittest.TestCase):
             pass
 
     def test_help(self):
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("help"))
+            output = (
+                "Documented commands (type help <topic>):\n"
+                "========================================\n"
+                "EOF  all  count  create  destroy  help  quit  show  update"
+            )
+            self.assertEqual(output, test.getvalue().strip())
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("help quit"))
+            output = "quit the command interpreter"
+            self.assertEqual(output, test.getvalue().strip())
 
         with patch("sys.stdout", new=SO()) as test:
-           self.assertFalse(HB().onecmd("help"))
-           output = ("Documented commands (type help <topic>):\n"
-             "========================================\n"
-             "EOF  all  count  create  destroy  help  quit  show  update")
-           self.assertEqual(output, test.getvalue().strip())
-        with patch("sys.stdout", new=SO()) as test:
-           self.assertFalse(HB().onecmd("help quit"))
-           output = "quit the command interpreter"
-           self.assertEqual(output, test.getvalue().strip())
+            self.assertFalse(HB().onecmd("help update"))
+            output = """Updates an instance adding or updating attribute"""
+            self.assertEqual(output, test.getvalue().strip())
 
         with patch("sys.stdout", new=SO()) as test:
-           self.assertFalse(HB().onecmd("help update"))
-           output = """Updates an instance adding or updating attribute"""
-           self.assertEqual(output, test.getvalue().strip())
+            self.assertFalse(HB().onecmd("help all"))
+            output = """Prints all string representation of all instances"""
+            self.assertEqual(output, test.getvalue().strip())
 
         with patch("sys.stdout", new=SO()) as test:
-           self.assertFalse(HB().onecmd("help all"))
-           output = """Prints all string representation of all instances"""
-           self.assertEqual(output, test.getvalue().strip())
+            self.assertFalse(HB().onecmd("help count"))
+            output = """retrive the number of instances of a class"""
+            self.assertEqual(output, test.getvalue().strip())
 
         with patch("sys.stdout", new=SO()) as test:
-           self.assertFalse(HB().onecmd("help count"))
-           output = """retrive the number of instances of a class"""
-           self.assertEqual(output, test.getvalue().strip())
+            self.assertFalse(HB().onecmd("help destroy"))
+            output = """if the class exist destroy it"""
+            self.assertEqual(output, test.getvalue().strip())
 
         with patch("sys.stdout", new=SO()) as test:
-           self.assertFalse(HB().onecmd("help destroy"))
-           output = """if the class exist destroy it"""
-           self.assertEqual(output, test.getvalue().strip())
-        
-        with patch("sys.stdout", new=SO()) as test:
-           self.assertFalse(HB().onecmd("help show"))
-           output = """Prints the string representation the class name and id"""
-           self.assertEqual(output, test.getvalue().strip())
+            self.assertFalse(HB().onecmd("help show"))
+            output =\
+                """Prints the string representation the class name and id"""
+            self.assertEqual(output, test.getvalue().strip())
 
         with patch("sys.stdout", new=SO()) as test:
-           self.assertFalse(HB().onecmd("help create"))
-           output = """Creates a new instance of BaseModel"""
-           self.assertEqual(output, test.getvalue().strip())
+            self.assertFalse(HB().onecmd("help create"))
+            output = """Creates a new instance of BaseModel"""
+            self.assertEqual(output, test.getvalue().strip())
 
-        #with patch("sys.stdout", new=SO()) as test:
-         #  self.assertFalse(HB().onecmd("help emptyline"))
-          # output = """nothing just pass"""
-           #self.assertEqual(output, test.getvalue().strip())
+        # with patch("sys.stdout", new=SO()) as test:
+        #  self.assertFalse(HB().onecmd("help emptyline"))
+        # output = """nothing just pass"""
+        # self.assertEqual(output, test.getvalue().strip())
 
         with patch("sys.stdout", new=SO()) as test:
-           self.assertFalse(HB().onecmd("help EOF"))
-           output = """print new line and exit"""
-           self.assertEqual(output, test.getvalue().strip())
-
+            self.assertFalse(HB().onecmd("help EOF"))
+            output = """print new line and exit"""
+            self.assertEqual(output, test.getvalue().strip())
 
     def test_EOF(self):
-        
         with patch("sys.stdout", new=SO()) as test:
-           self.assertTrue(HB().onecmd("EOF"))
+            self.assertTrue(HB().onecmd("EOF"))
 
     def test_quit(self):
-        
         with patch("sys.stdout", new=SO()) as test:
-           self.assertTrue(HB().onecmd("quit"))
+            self.assertTrue(HB().onecmd("quit"))
 
-    def test_empty_line(self):        
+    def test_empty_line(self):
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd(""))
             self.assertEqual("", test.getvalue().strip())
+
+
 class CreateTest(unittest.TestCase):
     def test_create(self):
-       
         with patch("sys.stdout", new=SO()) as test:
-           self.assertFalse(HB().onecmd("create"))
-           output = "** class name missing **"
-           self.assertEqual(output, test.getvalue().strip())
-           
+            self.assertFalse(HB().onecmd("create"))
+            output = "** class name missing **"
+            self.assertEqual(output, test.getvalue().strip())
+
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("create USER"))
             output = "** class doesn't exist **"
@@ -121,7 +121,7 @@ class CreateTest(unittest.TestCase):
             self.assertFalse(HB().onecmd("USER.create()"))
             output = "** class doesn't exist **"
             self.assertEqual(output, test.getvalue().strip())
-        
+
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("User.create()"))
             self.assertLess(0, len(test.getvalue().strip()))
@@ -158,12 +158,14 @@ class CreateTest(unittest.TestCase):
             self.assertLess(0, len(test.getvalue().strip()))
             test_cls = "State.{}".format(test.getvalue().strip())
             self.assertIn(test_cls, storage.all().keys())
-class TestShow(unittest.TestCase):    
+
+
+class TestShow(unittest.TestCase):
     def test_show(self):
         with patch("sys.stdout", new=SO()) as test:
-           self.assertFalse(HB().onecmd("show"))
-           output = "** class name missing **"
-           self.assertEqual(output, test.getvalue().strip())
+            self.assertFalse(HB().onecmd("show"))
+            output = "** class name missing **"
+            self.assertEqual(output, test.getvalue().strip())
 
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("show USER"))
@@ -174,7 +176,7 @@ class TestShow(unittest.TestCase):
             self.assertFalse(HB().onecmd("USER.show()"))
             output = "** class doesn't exist **"
             self.assertEqual(output, test.getvalue().strip())
-            #instance id missing
+            # instance id missing
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("show User"))
             output = "** instance id missing **"
@@ -204,9 +206,8 @@ class TestShow(unittest.TestCase):
             output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
 
-
-        #instance id missing with space
-                    #instance id missing
+        # instance id missing with space
+        # instance id missing
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("User.show()"))
             output = "** instance id missing **"
@@ -235,7 +236,6 @@ class TestShow(unittest.TestCase):
             self.assertFalse(HB().onecmd("State.show"))
             output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
-
 
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("create User"))
@@ -325,18 +325,18 @@ class TestShow(unittest.TestCase):
             output = "** no instance found **"
             self.assertEqual(output, test.getvalue().strip())
 
-class UpdateTest(unittest.TestCase):
 
+class UpdateTest(unittest.TestCase):
     def test_update(self):
         with patch("sys.stdout", new=SO()) as test:
-           self.assertFalse(HB().onecmd("update"))
-           output = "** class name missing **"
-           self.assertEqual(output, test.getvalue().strip())    
+            self.assertFalse(HB().onecmd("update"))
+            output = "** class name missing **"
+            self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("update USER"))
             output = "** class doesn't exist **"
             self.assertEqual(output, test.getvalue().strip())
-                    #instance id missing
+            # instance id missing
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("update User"))
             output = "** instance id missing **"
@@ -366,8 +366,7 @@ class UpdateTest(unittest.TestCase):
             output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
 
-
-         #instance id missing with dot
+        # instance id missing with dot
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("User.update"))
             output = "** instance id missing **"
@@ -397,13 +396,13 @@ class UpdateTest(unittest.TestCase):
             output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
 
-class DestroyTest(unittest.TestCase):
 
+class DestroyTest(unittest.TestCase):
     def test_destroy(self):
         with patch("sys.stdout", new=SO()) as test:
-           self.assertFalse(HB().onecmd("destroy"))
-           output = "** class name missing **"
-           self.assertEqual(output, test.getvalue().strip())
+            self.assertFalse(HB().onecmd("destroy"))
+            output = "** class name missing **"
+            self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("destroy USER"))
             output = "** class doesn't exist **"
@@ -412,8 +411,8 @@ class DestroyTest(unittest.TestCase):
             self.assertFalse(HB().onecmd("USER.destroy()"))
             output = "** class doesn't exist **"
             self.assertEqual(output, test.getvalue().strip())
-    
-                    #instance id missing
+
+            # instance id missing
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("destroy User"))
             output = "** instance id missing **"
@@ -443,7 +442,7 @@ class DestroyTest(unittest.TestCase):
             output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
 
-               #instance id missing with dot
+            # instance id missing with dot
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("User.destroy"))
             output = "** instance id missing **"
@@ -472,7 +471,7 @@ class DestroyTest(unittest.TestCase):
             self.assertFalse(HB().onecmd("State.destroy"))
             output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
-    
+
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("create User"))
             id_attribute = test.getvalue().strip()
@@ -632,6 +631,7 @@ class All_test(unittest.TestCase):
 
 class TestCount(unittest.TestCase):
     """for a count test"""
+
     @classmethod
     def setUp(self):
         try:
@@ -650,41 +650,44 @@ class TestCount(unittest.TestCase):
             os.rename("count", "file.json")
         except IOError:
             pass
+
     def test_count(self):
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("Amenity.create()"))
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("Amenity.count()"))
-            self.assertEqual('1', test.getvalue().strip())
+            self.assertEqual("1", test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("BaseModel.create()"))
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("BaseModel.count()"))
-            self.assertEqual('1', test.getvalue().strip())
+            self.assertEqual("1", test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("City.create()"))
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("City.count()"))
-            self.assertEqual('1', test.getvalue().strip())
+            self.assertEqual("1", test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("Place.create()"))
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("Place.count()"))
-            self.assertEqual('1', test.getvalue().strip())
+            self.assertEqual("1", test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("Review.create()"))
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("Review.count()"))
-            self.assertEqual('1', test.getvalue().strip())
+            self.assertEqual("1", test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("State.create()"))
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("State.count()"))
-            self.assertEqual('1', test.getvalue().strip())
+            self.assertEqual("1", test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("User.create()"))
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("User.count()"))
-            self.assertEqual('1', test.getvalue().strip())
+            self.assertEqual("1", test.getvalue().strip())
+
+
 if __name__ == "__main__":
     unittest.main()

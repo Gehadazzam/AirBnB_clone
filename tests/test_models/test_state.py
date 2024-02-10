@@ -12,8 +12,8 @@ from time import sleep
 from models.state import State as s
 from models.base_model import BaseModel as BM
 
-class TestState(unittest.TestCase):
 
+class TestState(unittest.TestCase):
     def testtype(self):
         ex1 = s()
         self.assertEqual(str(type(ex1)), "<class 'models.state.State'>")
@@ -22,13 +22,13 @@ class TestState(unittest.TestCase):
         self.assertEqual(str, type(s().id))
         self.assertEqual(dt, type(s().created_at))
         self.assertEqual(dt, type(s().updated_at))
-        
+
     def testmethods(self):
         ex2 = s()
         new_ex2 = ex2.updated_at
         ex2.save()
         self.assertLess(new_ex2, ex2.updated_at)
-        
+
 
 if __name__ == "__main__":
     unittest.main()
