@@ -271,6 +271,12 @@ class Test_HBNBCommand(unittest.TestCase):
             self.assertFalse(HB().onecmd(cmd))
             self.assertNotIn(cls, storage.all())
 
+        with patch("sys.stdout", new=SO()) as test:
+            self.assertFalse(HB().onecmd("Amenity.destroy(2e3)"))
+            output = "** no instance found **"
+            self.assertEqual(output, test.getvalue().strip())
+
+
     def test_all(self):
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("all USER"))
