@@ -7,7 +7,7 @@ from models.base_model import BaseModel
 from models import storage
 import re
 import json
-import ast
+
 class HBNBCommand(cmd.Cmd):
     """class to handle the program"""
 
@@ -27,7 +27,7 @@ class HBNBCommand(cmd.Cmd):
             "emptyline": self.emptyline,
         }
         self.check_command(line)
-#User.update("d2aeb18f-0a1a-4e2d-a4ba-557e1bdb4ebd", {'first_name': "John", 'age': 89})
+
     def check_command(self, line_command):
         """checks for valid command and prints help if needed"""
         period = re.match(r"^(\w*)\.(\w+)(?:\(([^)]*)\))$", line_command)
@@ -35,33 +35,39 @@ class HBNBCommand(cmd.Cmd):
             class_name = period.group(1)
             method = period.group(2)
             id_arg = period.group(3)
+            print(f"{id_arg}")
             if method == "update":
-                if '{' in id_arg:
-                    id_attribute, d, c = id_arg.split(sep=", ")
-                    if d and c:
-                        dic = d[1:]
-                        dic2 = c[:-1]
-                        key_attribute, value_attribute = dic.split(': ')
-                        key_attribute2, value_attribute2 = dic2.split(': ')
-                       # print(key_attribute)
-                        #print(value_attribute)
-                        #print(key_attribute2)
-                        #print(value_attribute2)
-                        a = (("{} {} {} {} {}".format(
-                    method, class_name, id_attribute[1:-1], key_attribute[1:-1], value_attribute, key_attribute2, value_attribute2
-                    )))
-                        b = (("{} {}").format(key_attribute2, value_attribute2))
-                        all = a + b
-                    else:
-                        dic = d[1:-1]
-                        key_attribute, value_attribute = dic.split(': ')
-                        all = (("{} {} {} {} {}".format(
-                    method, class_name, id_attribute[1:-1], key_attribute[1:-1], value_attribute
-                    )))
-                else:
+                if '{' in id_arg and '}' in id_arg:
+                    id_arg = id_arg.replace("'", '"')
+                    id_arg = id_arg.replace(": ", ', ')
+                    id_attribute, id_arg = id_arg.split(sep=", {")
+                    id_arg = id_arg[:-1]
+                    print(f"{id_arg}")
+                    if '"' in id_attribute:
+                        id_attribute = id_attribute[1:-1]
+                    print(f"{id_arg}")
+                    id_arg = id_arg.split(sep=", ")
+                    print(f"{id_arg}")
+                    for i in range(0, len(id_arg), 2):
+                        key = id_arg[i]
+                        value = id_arg[i+1]
+                        print(f"{key}=>{value}")
+                        if '"' in key:
+                            key = key[1:-1]
+                        print(f"{key}=>{value}")
+                        hack = (("{} {} {} {} {}".format(
+                            method, class_name, id_attribute, key, value
+                        )))
+                        self.onecmd(hack)
+                    return hack
+                if ', ' in id_arg:
                     id_attribute, key_attribute, value_attribute = id_arg.split(sep=", ")
-                    all = (("{} {} {} {} {}".format(
-                    method, class_name, id_attribute[1:-1], key_attribute[1:-1], value_attribute
+                if '"' in id_attribute:
+                    id_attribute = id_attribute[1:-1]
+                if '"' in key_attribute:
+                    key_attribute = key_attribute[1:-1]
+                all = (("{} {} {} {} {}".format(
+                    method, class_name, id_attribute, key_attribute, value_attribute
                     )))
                 self.onecmd(all)
                 return all
@@ -79,6 +85,67 @@ class HBNBCommand(cmd.Cmd):
                 print("*** Unknown syntax: {}".format(line_command))
         else:
             return line_command
+
+    # def update_dict(self, method, class_name, id_arg):
+        # """Helper method for update() with a dictionary."""
+        # id_arg = id_arg.replace("'", '"')
+        # id_arg = id_arg.replace(": ", ', ')
+        # id_attribute, id_arg = id_arg.split(sep=", {")
+        # id_arg = id_arg[:-1]
+        # print(f"{id_arg}")
+        # if '"' in id_attribute:
+        #     id_attribute = id_attribute[1:-1]
+        # print(f"{id_arg}")
+        # id_arg = id_arg.split(sep=", ")
+        # # id_arg = eval(id_arg)
+        # print(f"{id_arg}")
+        # for i in range(0, len(id_arg), 2):
+        #     key = id_arg[i]
+        #     value = id_arg[i+1]
+        #     print(f"{key}=>{value}")
+        #     if '"' in key:
+        #         return key[1:-1]
+        #     if '"' in value:
+        #         return value[1:-1]
+        #     print(f"{key}=>{value}")
+        #     hack = (("{} {} {} {} {}".format(
+        #         method, class_name, id_attribute, key, value
+        #     )))
+        #     self.onecmd(hack)
+        # return hack
+        # match = re.match(r'^(\S+),\s(\{.*\})$', id_arg)
+        # if not match:
+        #     print("*** Invalid syntax: {}".format(id_arg))
+        #     return
+        # uid = match.group(1)
+        # s_dict = match.group(2)
+        # # s_dict = s_dict.replace("'", '"')
+        # d = json.loads(id_arg)
+        # if not class_name:
+        #     print("** class name missing **")
+        # elif class_name not in storage.class_dict():
+        #     print("** class doesn't exist **")
+        # elif not id_attribute:
+        #     print("** instance id missing **")
+        # else:
+        #     key = "{}.{}".format(class_name, id_attribute)
+        #     if key not in storage.all():
+        #         print("** no instance found **")
+        #     else:
+        #         attributes = storage.attribe()[class_name]
+        #         for attribute, value in d.items():
+        #             if attribute in attributes:
+        #                 value = attributes[attribute](value)
+        #             setattr(storage.all()[key], attribute, value)
+        #         storage.all()[key].save()
+        #         id_arg = eval(id_arg)
+        #         for k, v in id_arg.items():
+        #             hack = (("{} {} {} {} {}".format(
+        #                 method, class_name, id_attribute, str(k), str(v)
+        #             )))
+        #             self.onecmd(hack)
+        #         return hack
+
 
     def do_quit(self, ar):
         """quit the command interpreter"""
