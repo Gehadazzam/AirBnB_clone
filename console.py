@@ -8,6 +8,7 @@ from models import storage
 import re
 import json
 
+
 class HBNBCommand(cmd.Cmd):
     """class to handle the program"""
 
@@ -55,20 +56,24 @@ class HBNBCommand(cmd.Cmd):
                         self.onecmd(hack)
                     return hack
                 if ', ' in id_arg:
-                    id_attribute, key_attribute, value_attribute = id_arg.split(sep=", ")
+                    id_attribute, key_attribute, value_attribute =\
+                      id_arg.split(sep=", ")
                 if '"' in id_attribute:
                     id_attribute = id_attribute[1:-1]
                 if '"' in key_attribute:
                     key_attribute = key_attribute[1:-1]
                 all = (("{} {} {} {} {}".format(
-                    method, class_name, id_attribute, key_attribute, value_attribute
+                    method, class_name, id_attribute,
+                    key_attribute, value_attribute
                     )))
                 self.onecmd(all)
                 return all
             elif method != "update":
                 if id_arg and class_name:
                     if '"' in id_arg:
-                        all = (("{} {} {}").format(method, class_name, id_arg[1:-1]))
+                        all = (("{} {} {}").format(
+                          method, class_name, id_arg[1:-1]
+                        ))
                     else:
                         all = (("{} {} {}").format(method, class_name, id_arg))
                 else:
@@ -79,67 +84,6 @@ class HBNBCommand(cmd.Cmd):
                 print("*** Unknown syntax: {}".format(line_command))
         else:
             return line_command
-
-    # def update_dict(self, method, class_name, id_arg):
-        # """Helper method for update() with a dictionary."""
-        # id_arg = id_arg.replace("'", '"')
-        # id_arg = id_arg.replace(": ", ', ')
-        # id_attribute, id_arg = id_arg.split(sep=", {")
-        # id_arg = id_arg[:-1]
-        # print(f"{id_arg}")
-        # if '"' in id_attribute:
-        #     id_attribute = id_attribute[1:-1]
-        # print(f"{id_arg}")
-        # id_arg = id_arg.split(sep=", ")
-        # # id_arg = eval(id_arg)
-        # print(f"{id_arg}")
-        # for i in range(0, len(id_arg), 2):
-        #     key = id_arg[i]
-        #     value = id_arg[i+1]
-        #     print(f"{key}=>{value}")
-        #     if '"' in key:
-        #         return key[1:-1]
-        #     if '"' in value:
-        #         return value[1:-1]
-        #     print(f"{key}=>{value}")
-        #     hack = (("{} {} {} {} {}".format(
-        #         method, class_name, id_attribute, key, value
-        #     )))
-        #     self.onecmd(hack)
-        # return hack
-        # match = re.match(r'^(\S+),\s(\{.*\})$', id_arg)
-        # if not match:
-        #     print("*** Invalid syntax: {}".format(id_arg))
-        #     return
-        # uid = match.group(1)
-        # s_dict = match.group(2)
-        # # s_dict = s_dict.replace("'", '"')
-        # d = json.loads(id_arg)
-        # if not class_name:
-        #     print("** class name missing **")
-        # elif class_name not in storage.class_dict():
-        #     print("** class doesn't exist **")
-        # elif not id_attribute:
-        #     print("** instance id missing **")
-        # else:
-        #     key = "{}.{}".format(class_name, id_attribute)
-        #     if key not in storage.all():
-        #         print("** no instance found **")
-        #     else:
-        #         attributes = storage.attribe()[class_name]
-        #         for attribute, value in d.items():
-        #             if attribute in attributes:
-        #                 value = attributes[attribute](value)
-        #             setattr(storage.all()[key], attribute, value)
-        #         storage.all()[key].save()
-        #         id_arg = eval(id_arg)
-        #         for k, v in id_arg.items():
-        #             hack = (("{} {} {} {} {}".format(
-        #                 method, class_name, id_attribute, str(k), str(v)
-        #             )))
-        #             self.onecmd(hack)
-        #         return hack
-
 
     def do_quit(self, ar):
         """quit the command interpreter"""
@@ -162,11 +106,11 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print("** class name missing **")
         elif arg not in storage.class_dict():
-            print ("** class doesn't exist **")
+            print("** class doesn't exist **")
         else:
-            l = storage.class_dict()[arg]()
-            l.save()
-            print(l.id)
+            line = storage.class_dict()[arg]()
+            line.save()
+            print(line.id)
 
     def do_show(self, arg):
         """Prints the string representation the class name and id"""
@@ -175,7 +119,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             w = arg.split()
             if w[0] not in storage.class_dict():
-                print ("** class doesn't exist **")
+                print("** class doesn't exist **")
             elif len(w) < 2:
                 print("** instance id missing **")
             else:
@@ -190,7 +134,8 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print("** class name missing **")
         else:
-            pattern = r'^(\S+)(?:\s(\S+)(?:\s(\S+)(?:\s((?:"[^"]*")|(?:(\S)+)))?)?)?'
+            pattern =\
+              r'^(\S+)(?:\s(\S+)(?:\s(\S+)(?:\s((?:"[^"]*")|(?:(\S)+)))?)?)?'
             match = re.search(pattern, arg)
             classname_attribute = match.group(1)
             uid_attribute = match.group(2)
@@ -199,7 +144,7 @@ class HBNBCommand(cmd.Cmd):
             if not match:
                 print("** class name missing **")
             if classname_attribute not in storage.class_dict():
-                print ("** class doesn't exist **")
+                print("** class doesn't exist **")
             elif not uid_attribute:
                 print("** instance id missing **")
             else:
@@ -213,7 +158,8 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     attributes = storage.attribe()[classname_attribute]
                     if key_attribute in attributes:
-                        value_attribute = attributes[key_attribute](value_attribute)
+                        value_attribute =\
+                          attributes[key_attribute](value_attribute)
                     if '"' in value_attribute:
                         value_attribute = value_attribute[1:-1]
                     else:
@@ -260,10 +206,13 @@ class HBNBCommand(cmd.Cmd):
         if not par:
             print("** class name missing **")
         elif not par[0] in storage.class_dict():
-             print("** class doesn't exist **")
+            print("** class doesn't exist **")
         else:
-            count = [item for item in storage.all() if item.startswith(par[0] + '.')]
+            count = [
+              item for item in storage.all() if item.startswith(par[0] + '.')
+            ]
             print(len(count))
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
