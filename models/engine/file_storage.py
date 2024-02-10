@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-"""Write a class FileStorage that defines all common attributes/methods for other classes"""
+"""
+Write a class FileStorage that defines
+all common attributes/methods for other classes
+"""
 
 import datetime as dt
 from os.path import exists
@@ -7,8 +10,11 @@ import json
 import datetime
 import os
 
+
 class FileStorage:
-    """class FileStorage that serializes and deserializes JSON file"""
+    """
+    class FileStorage that serializes and deserializes JSON file
+    """
     __file_path = "file.json"
     __objects = {}
 
@@ -29,25 +35,26 @@ class FileStorage:
 
     def reload(self):
         """deserializes the JSON file to __objects"""
-        if exists (FileStorage.__file_path):
+        if exists(FileStorage.__file_path):
             with open(FileStorage.__file_path, 'r', encoding="utf-8") as f:
-                l = json.load(f)
-                l = {k: self.class_dict()[v["__class__"]](**v)
-                        for k, v in l.items()}
-                FileStorage.__objects = l
+                line = json.load(f)
+                line = {k: self.class_dict()[v["__class__"]](**v)
+                        for k, v in line.items()}
+                FileStorage.__objects = line
         else:
             return
 
     def class_dict(self):
-        """to correctly serialize and deserialize instances of the new classes"""
+        """
+        to correctly serialize and deserialize instances of the new classes
+        """
         from models.base_model import BaseModel
-        from models.user  import User
+        from models.user import User
         from models.state import State
         from models.city import City
         from models.amenity import Amenity
         from models.place import Place
         from models.review import Review
-
         class_dict = {
             "BaseModel": BaseModel,
             "User": User,
@@ -62,12 +69,10 @@ class FileStorage:
     def attribe(self):
         """Returns the valid attributes and their types for classname"""
         attribe = {
-            "BaseModel":
-                    {"id": str,
-                     "created_at": dt.datetime,
-                     "updated_at": dt.datetime},
-            "User":
-                    {"email": str,
+            "BaseModel": {"id": str,
+                          "created_at": dt.datetime,
+                          "updated_at": dt.datetime},
+            "User": {"email": str,
                      "password": str,
                      "first_name": str,
                      "last_name": str},
