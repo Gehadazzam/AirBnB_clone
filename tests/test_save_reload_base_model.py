@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 import os
 import sys
-project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, project_root)
 from models import storage
 from models.base_model import BaseModel
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, project_root)
 
 all_objs = storage.all()
 print("-- Reloaded objects --")
