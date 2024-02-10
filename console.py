@@ -35,26 +35,20 @@ class HBNBCommand(cmd.Cmd):
             class_name = period.group(1)
             method = period.group(2)
             id_arg = period.group(3)
-            print(f"{id_arg}")
             if method == "update":
                 if '{' in id_arg and '}' in id_arg:
                     id_arg = id_arg.replace("'", '"')
                     id_arg = id_arg.replace(": ", ', ')
                     id_attribute, id_arg = id_arg.split(sep=", {")
                     id_arg = id_arg[:-1]
-                    print(f"{id_arg}")
                     if '"' in id_attribute:
                         id_attribute = id_attribute[1:-1]
-                    print(f"{id_arg}")
                     id_arg = id_arg.split(sep=", ")
-                    print(f"{id_arg}")
                     for i in range(0, len(id_arg), 2):
                         key = id_arg[i]
                         value = id_arg[i+1]
-                        print(f"{key}=>{value}")
                         if '"' in key:
                             key = key[1:-1]
-                        print(f"{key}=>{value}")
                         hack = (("{} {} {} {} {}".format(
                             method, class_name, id_attribute, key, value
                         )))
