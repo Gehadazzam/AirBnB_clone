@@ -23,3 +23,12 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(dt, type(p().created_at))
         self.assertEqual(dt, type(p().updated_at))
         
+    def testmethods(self):
+        ex2 = p()
+        new_ex2 = ex2.updated_at
+        ex2.save()
+        self.assertLess(new_ex2, ex2.updated_at)
+        
+
+if __name__ == "__main__":
+    unittest.main()

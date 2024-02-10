@@ -5,6 +5,7 @@
 from models.base_model import BaseModel
 import json
 
+
 class User(BaseModel):
     """user class"""
 

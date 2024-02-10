@@ -27,5 +27,9 @@ class testAmenity(unittest.TestCase):
         ex2 = A()
         new_ex2 = ex2.updated_at
         ex2.save()
-        self.assertless(new_ex2, ex2.updated_at)
+        self.assertLess(new_ex2, ex2.updated_at)
         
+
+
+if __name__ == "__main__":
+    unittest.main()

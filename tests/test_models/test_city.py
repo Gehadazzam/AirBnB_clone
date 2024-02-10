@@ -23,3 +23,12 @@ class CityTest(unittest.TestCase):
         self.assertEqual(dt, type(c().created_at))
         self.assertEqual(dt, type(c().updated_at))
         
+    def testmethods(self):
+        ex2 = c()
+        new_ex2 = ex2.updated_at
+        ex2.save()
+        self.assertLess(new_ex2, ex2.updated_at)
+
+if __name__ == "__main__":
+    unittest.main()
+        

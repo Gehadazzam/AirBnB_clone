@@ -23,3 +23,13 @@ class ReviewTest(unittest.TestCase):
         self.assertEqual(dt, type(r().created_at))
         self.assertEqual(dt, type(r().updated_at))
         
+    def testmethods(self):
+        ex2 = r()
+        new_ex2 = ex2.updated_at
+        ex2.save()
+        self.assertLess(new_ex2, ex2.updated_at)
+
+
+if __name__ == "__main__":
+    unittest.main()
+        

@@ -18,3 +18,7 @@ class testBaseModel(unittest.TestCase):
         self.assertEqual(str, type(BM().id))
         self.assertEqual(dt, type(BM().created_at))
         self.assertEqual(dt, type(BM().updated_at))
+
+
+if __name__ == "__main__":
+    unittest.main()
