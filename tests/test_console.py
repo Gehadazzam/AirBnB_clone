@@ -105,6 +105,25 @@ class Test_HBNBCommand(unittest.TestCase):
 
 
 class CreateTest(unittest.TestCase):
+    @classmethod
+    def setUp(self):
+        try:
+            os.rename("file.json", "count")
+        except IOError:
+            pass
+        FileStorage._FileStorage__objects = {}
+
+    @classmethod
+    def tearDown(self):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        try:
+            os.rename("count", "file.json")
+        except IOError:
+            pass
+
     def test_create(self):
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("create"))
@@ -179,6 +198,7 @@ class TestShow(unittest.TestCase):
         except IOError:
             pass
 
+
     def test_show(self):
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("show"))
@@ -224,25 +244,7 @@ class TestShow(unittest.TestCase):
             output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
 
-        # instance id missing with space
-    @classmethod
-    def setUp(self):
-        try:
-            os.rename("file.json", "count")
-        except IOError:
-            pass
-        FileStorage._FileStorage__objects = {}
-
-    @classmethod
-    def tearDown(self):
-        try:
-            os.remove("file.json")
-        except IOError:
-            pass
-        try:
-            os.rename("count", "file.json")
-        except IOError:
-            pass
+        # instance id missing with dot
     def testidmissing(self):
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("User.show()"))
@@ -261,17 +263,18 @@ class TestShow(unittest.TestCase):
             output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
-            self.assertFalse(HB().onecmd("BaseModel.show"))
+            self.assertFalse(HB().onecmd("BaseModel.show()"))
             output = "** instance id missing **"
-            #self.assertEqual(output, test.getvalue().strip())
+            self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("Review.show()"))
             output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
-            self.assertFalse(HB().onecmd("State.show"))
+            self.assertFalse(HB().onecmd("State.show()"))
             output = "** instance id missing **"
-            #self.assertEqual(output, test.getvalue().strip())
+            self.assertEqual(output, test.getvalue().strip())
+
 
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("create User"))
@@ -363,6 +366,26 @@ class TestShow(unittest.TestCase):
 
 
 class UpdateTest(unittest.TestCase):
+    @classmethod
+    def setUp(self):
+        try:
+            os.rename("file.json", "count")
+        except IOError:
+            pass
+        FileStorage._FileStorage__objects = {}
+
+    @classmethod
+    def tearDown(self):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        try:
+            os.rename("count", "file.json")
+        except IOError:
+            pass
+
+
     def test_update(self):
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("update"))
@@ -404,36 +427,55 @@ class UpdateTest(unittest.TestCase):
 
         # instance id missing with dot
         with patch("sys.stdout", new=SO()) as test:
-            self.assertFalse(HB().onecmd("User.update"))
+            self.assertFalse(HB().onecmd("User.update()"))
             output = "** instance id missing **"
-            #self.assertEqual(output, test.getvalue().strip())
+            self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("Amenity.update"))
             output = "** instance id missing **"
-            #self.assertEqual(output, test.getvalue().strip())
+            self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
-            self.assertFalse(HB().onecmd("City.update"))
+            self.assertFalse(HB().onecmd("City.update()"))
             output = "** instance id missing **"
-            #self.assertEqual(output, test.getvalue().strip())
+            self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("Place.update"))
             output = "** instance id missing **"
-            #self.assertEqual(output, test.getvalue().strip())
+            self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
-            self.assertFalse(HB().onecmd("BaseModel.update"))
+            self.assertFalse(HB().onecmd("BaseModel.update()"))
             output = "** instance id missing **"
-            #self.assertEqual(output, test.getvalue().strip())
+            self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
-            self.assertFalse(HB().onecmd("Review.update"))
+            self.assertFalse(HB().onecmd("Review.update()"))
             output = "** instance id missing **"
-            #self.assertEqual(output, test.getvalue().strip())
+            self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
-            self.assertFalse(HB().onecmd("State.update"))
+            self.assertFalse(HB().onecmd("State.update()"))
             output = "** instance id missing **"
-            #self.assertEqual(output, test.getvalue().strip())
+            self.assertEqual(output, test.getvalue().strip())
 
 
 class DestroyTest(unittest.TestCase):
+    @classmethod
+    def setUp(self):
+        try:
+            os.rename("file.json", "count")
+        except IOError:
+            pass
+        FileStorage._FileStorage__objects = {}
+
+    @classmethod
+    def tearDown(self):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        try:
+            os.rename("count", "file.json")
+        except IOError:
+            pass
+
     def test_destroy(self):
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("destroy"))
@@ -478,35 +520,58 @@ class DestroyTest(unittest.TestCase):
             output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
 
-            # instance id missing with dot
+class testdestroywithdot(unittest.TestCase):
+    
+    @classmethod
+    def setUp(self):
+        try:
+            os.rename("file.json", "count")
+        except IOError:
+            pass
+        FileStorage._FileStorage__objects = {}
+
+    @classmethod
+    def tearDown(self):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        try:
+            os.rename("count", "file.json")
+        except IOError:
+            pass
+
+
+    def test(self):
         with patch("sys.stdout", new=SO()) as test:
-            self.assertFalse(HB().onecmd("User.destroy"))
+            self.assertFalse(HB().onecmd("User.destroy()"))
             output = "** instance id missing **"
-            self.assertNotEqual(output, test.getvalue().strip())
+            self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
-            self.assertFalse(HB().onecmd("Amenity.destroy"))
+            self.assertFalse(HB().onecmd("Amenity.destroy()"))
             output = "** instance id missing **"
-            self.assertNotEqual(output, test.getvalue().strip())
+            self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
-            self.assertFalse(HB().onecmd("City.destroy"))
+            self.assertFalse(HB().onecmd("City.destroy()"))
             output = "** instance id missing **"
-            self.assertNotEqual(output, test.getvalue().strip())
+            self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
-            self.assertFalse(HB().onecmd("Place.destroy"))
+            self.assertFalse(HB().onecmd("Place.destroy()"))
             output = "** instance id missing **"
-            self.assertNotEqual(output, test.getvalue().strip())
+            self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
-            self.assertFalse(HB().onecmd("BaseModel.destroy"))
+            self.assertFalse(HB().onecmd("BaseModel.destroy()"))
             output = "** instance id missing **"
-            self.assertNotEqual(output, test.getvalue().strip())
+            self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
-            self.assertFalse(HB().onecmd("Review.destroy"))
+            self.assertFalse(HB().onecmd("Review.destroy()"))
             output = "** instance id missing **"
-            self.assertNotEqual(output, test.getvalue().strip())
+            self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
-            self.assertFalse(HB().onecmd("State.destroy"))
+            self.assertFalse(HB().onecmd("State.destroy()"))
             output = "** instance id missing **"
-            self.assertNotEqual(output, test.getvalue().strip())
+            self.assertEqual(output, test.getvalue().strip())
+
 
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("create User"))
@@ -598,6 +663,25 @@ class DestroyTest(unittest.TestCase):
 
 
 class All_test(unittest.TestCase):
+    @classmethod
+    def setUp(self):
+        try:
+            os.rename("file.json", "count")
+        except IOError:
+            pass
+        FileStorage._FileStorage__objects = {}
+
+    @classmethod
+    def tearDown(self):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        try:
+            os.rename("count", "file.json")
+        except IOError:
+            pass
+
     def test_all(self):
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("all USER"))

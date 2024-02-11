@@ -56,15 +56,14 @@ class HBNBCommand(cmd.Cmd):
                         self.onecmd(hack)
                     return hack
                 if ', ' in id_arg:
-                    id_attribute, key_attribute, value_attribute =\
-                      id_arg.split(sep=", ")
+                    id_attribute, key_attr, value_attr = id_arg.split(sep=", ")
                 if '"' in id_attribute:
                     id_attribute = id_attribute[1:-1]
-                if '"' in key_attribute:
-                    key_attribute = key_attribute[1:-1]
+                if '"' in key_attr:
+                    key_attr = key_attr[1:-1]
                 all = (("{} {} {} {} {}".format(
                     method, class_name, id_attribute,
-                    key_attribute, value_attribute
+                    key_attr, value_attr
                     )))
                 self.onecmd(all)
                 return all
@@ -139,8 +138,8 @@ class HBNBCommand(cmd.Cmd):
             match = re.search(pattern, arg)
             classname_attribute = match.group(1)
             uid_attribute = match.group(2)
-            key_attribute = match.group(3)
-            value_attribute = match.group(4)
+            key_attr = match.group(3)
+            value_attr = match.group(4)
             if not match:
                 print("** class name missing **")
             if classname_attribute not in storage.class_dict():
@@ -151,23 +150,23 @@ class HBNBCommand(cmd.Cmd):
                 k = "{}.{}".format(classname_attribute, uid_attribute)
                 if k not in storage.all():
                     print("** no instance found **")
-                elif not key_attribute:
+                elif not key_attr:
                     print("** attribute name missing **")
-                elif not value_attribute:
+                elif not value_attr:
                     print("** value missing **")
                 else:
                     attributes = storage.attribe()[classname_attribute]
-                    if key_attribute in attributes:
-                        value_attribute =\
-                          attributes[key_attribute](value_attribute)
-                    if '"' in value_attribute:
-                        value_attribute = value_attribute[1:-1]
+                    if key_attr in attributes:
+                        value_attr =\
+                          attributes[key_attr](value_attr)
+                    if '"' in value_attr:
+                        value_attr = value_attr[1:-1]
                     else:
-                        if '.' in value_attribute:
-                            value_attribute = float(value_attribute)
+                        if '.' in value_attr:
+                            value_attr = float(value_attr)
                         else:
-                            value_attribute = int(value_attribute)
-                    setattr(storage.all()[k], key_attribute, value_attribute)
+                            value_attr = int(value_attr)
+                    setattr(storage.all()[k], key_attr, value_attr)
                     storage.all()[k].save()
 
     def do_destroy(self, arg):
