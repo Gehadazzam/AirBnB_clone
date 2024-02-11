@@ -11,7 +11,7 @@ from datetime import datetime as dt
 from time import sleep
 from models.base_model import BaseModel as BM
 from models.engine.file_storage import FileStorage as FS
-
+from models import storage
 
 class testBaseModel(unittest.TestCase):
     @classmethod
@@ -68,6 +68,17 @@ class testBaseModel(unittest.TestCase):
         ex5.my_number = 98
         self.assertIn("name", ex5.to_dict())
         self.assertIn("my_number", ex5.to_dict())
+
+
+        ex6 = BM()
+        with self.assertRaises(TypeError):
+            ex6.save(None)
+
+        attr = storage.attribe()["BaseModel"]
+        ex7 = BM()
+        for key, value in attr.items():
+            self.assertTrue(hasattr(ex7, key))
+            self.assertEqual(type(getattr(ex7, key, None)), value)
 
 
 if __name__ == "__main__":
