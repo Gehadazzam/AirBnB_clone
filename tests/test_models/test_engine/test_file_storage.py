@@ -43,6 +43,9 @@ class FileStorageTest(unittest.TestCase):
         self.assertIsInstance(models.storage, FS)
 
     def testclass(self):
+
+        self.assertEqual(dict, type(models.storage.all()))
+
         ex1, ex2, ex3, ex4, ex5, ex6, ex7 = BM(), A(), U(), R(), P(), S(), C()
 
         ex3.id = "8765"
