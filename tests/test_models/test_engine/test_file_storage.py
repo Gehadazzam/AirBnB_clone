@@ -41,6 +41,7 @@ class FileStorageTest(unittest.TestCase):
 
     def teststore(self):
         self.assertIsInstance(models.storage, FS)
+        
         cls = models.storage.all()
         self.assertEqual(cls, {})
 
@@ -69,6 +70,15 @@ class FileStorageTest(unittest.TestCase):
         self.assertIn(ex6, models.storage.all().values())
         self.assertIn(ex7, models.storage.all().values())
 
+        object = FS._FileStorage__objects
+        self.assertIn("BaseModel." + ex1.id, object)
+        self.assertIn("Amenity." + ex2.id, object)
+        self.assertIn("User." + ex3.id, object)
+        self.assertIn("Review." + ex4.id, object)
+        self.assertIn("Place." + ex5.id, object)
+        self.assertIn("State." + ex6.id, object)
+        self.assertIn("City." + ex7.id, object)
+        
         self.assertEqual(len(models.storage.all()), 8)
 
         models.storage.reload( )
