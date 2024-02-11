@@ -11,7 +11,7 @@ from datetime import datetime as dt
 from time import sleep
 from models.review import Review as r
 from models.base_model import BaseModel as BM
-
+from models import storage
 
 class ReviewTest(unittest.TestCase):
     def testtype(self):
@@ -28,7 +28,11 @@ class ReviewTest(unittest.TestCase):
         new_ex2 = ex2.updated_at
         ex2.save()
         self.assertLess(new_ex2, ex2.updated_at)
-
+        attr = storage.attribe()["Review"]
+        ex7 = r()
+        for key, value in attr.items():
+            self.assertTrue(hasattr(ex7, key))
+            self.assertEqual(type(getattr(ex7, key, None)), value)  
 
 if __name__ == "__main__":
     unittest.main()

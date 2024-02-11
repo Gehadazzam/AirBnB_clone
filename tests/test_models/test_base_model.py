@@ -54,7 +54,7 @@ class testBaseModel(unittest.TestCase):
         new = ex2.updated_at
         ex2.save()
         self.assertLess(new, ex2.updated_at)
-
+        self.assertNotEqual(ex1.id, ex2.id)
         ex3 = BM("7", id="64553")
         self.assertEqual(ex3.id, "64553")
 
