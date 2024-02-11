@@ -72,8 +72,7 @@ class Test_HBNBCommand(unittest.TestCase):
 
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("help show"))
-            output =\
-                """Prints the string representation the class name and id"""
+            output = "Prints the string representation the class name and id"
             self.assertEqual(output, test.getvalue().strip())
 
         with patch("sys.stdout", new=SO()) as test:
