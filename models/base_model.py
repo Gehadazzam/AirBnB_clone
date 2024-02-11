@@ -48,6 +48,6 @@ class BaseModel:
         """
         my_ob_dict = self.__dict__.copy()
         my_ob_dict["__class__"] = self.__class__.__name__
-        my_ob_dict["created_at"] = my_ob_dict["updated_at"].isoformat()
+        my_ob_dict["created_at"] = my_ob_dict["created_at"].isoformat()
         my_ob_dict["updated_at"] = my_ob_dict["updated_at"].isoformat()
         return my_ob_dict
