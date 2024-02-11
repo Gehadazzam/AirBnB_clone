@@ -15,7 +15,7 @@ from models.place import Place as P
 from models.city import City as C
 from models.amenity import Amenity as A
 from models.review import Review as R
-
+from models import storage
 
 class FileStorageTest(unittest.TestCase):
     """test store classes"""
@@ -45,6 +45,9 @@ class FileStorageTest(unittest.TestCase):
     def testclass(self):
         ex1, ex2, ex3, ex4, ex5, ex6, ex7 = BM(), A(), U(), R(), P(), S(), C()
 
+        ex3.id = "8765"
+        ex3.first_name = "Gehad"
+
         models.storage.new(ex1)
         models.storage.new(ex2)
         models.storage.new(ex3)
@@ -68,6 +71,12 @@ class FileStorageTest(unittest.TestCase):
         self.assertIn("State." + ex6.id, models.storage.all().keys())
         self.assertIn("City." + ex7.id, models.storage.all().keys())
 
-
+        attr = storage.all()
+        k = ex3.__class__.__name__ + "." + str(ex3.id)
+        self.assertIsNotNone(attr[k])
+        self.assertEqual(type(attr), dict)
+        self.assertIs(attr, storage._FileStorage__objects)
+        
+        
 if __name__ == "__main__":
     unittest.main()

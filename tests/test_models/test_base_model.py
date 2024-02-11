@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Unnitesst for BASEMODEL class
+Unnitesst for modelMODEL class
 """
 
 
@@ -13,7 +13,7 @@ from models.base_model import BaseModel as BM
 from models.engine.file_storage import FileStorage as FS
 from models import storage
 
-class testBaseModel(unittest.TestCase):
+class testmodelModel(unittest.TestCase):
     @classmethod
     def setUp(self):
         try:
@@ -38,6 +38,9 @@ class testBaseModel(unittest.TestCase):
         self.assertEqual(str, type(BM().id))
         self.assertEqual(dt, type(BM().created_at))
         self.assertEqual(dt, type(BM().updated_at))
+        self.assertTrue(hasattr(storage, 'new'))
+        
+    def testbase(self):
 
         ex1 = BM()
         sleep(0.05)
@@ -80,6 +83,11 @@ class testBaseModel(unittest.TestCase):
             self.assertTrue(hasattr(ex7, key))
             self.assertEqual(type(getattr(ex7, key, None)), value)
 
+
+        ex8 = BM()
+        str1 = "[BaseModel] ({}) {}".format(ex8.id, ex8.__dict__)
+        str2 = str(ex8)
+        self.assertEqual(str1, str2)
 
 if __name__ == "__main__":
     unittest.main()
