@@ -198,7 +198,6 @@ class TestShow(unittest.TestCase):
         except IOError:
             pass
 
-
     def test_show(self):
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("show"))
@@ -245,6 +244,7 @@ class TestShow(unittest.TestCase):
             self.assertEqual(output, test.getvalue().strip())
 
         # instance id missing with dot
+
     def testidmissing(self):
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("User.show()"))
@@ -274,7 +274,6 @@ class TestShow(unittest.TestCase):
             self.assertFalse(HB().onecmd("State.show()"))
             output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
-
 
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("create User"))
@@ -384,7 +383,6 @@ class UpdateTest(unittest.TestCase):
             os.rename("count", "file.json")
         except IOError:
             pass
-
 
     def test_update(self):
         with patch("sys.stdout", new=SO()) as test:
@@ -520,8 +518,8 @@ class DestroyTest(unittest.TestCase):
             output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
 
+
 class testdestroywithdot(unittest.TestCase):
-    
     @classmethod
     def setUp(self):
         try:
@@ -540,7 +538,6 @@ class testdestroywithdot(unittest.TestCase):
             os.rename("count", "file.json")
         except IOError:
             pass
-
 
     def test(self):
         with patch("sys.stdout", new=SO()) as test:
@@ -571,7 +568,6 @@ class testdestroywithdot(unittest.TestCase):
             self.assertFalse(HB().onecmd("State.destroy()"))
             output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
-
 
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("create User"))
