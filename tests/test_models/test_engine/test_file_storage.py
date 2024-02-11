@@ -55,7 +55,7 @@ class FileStorageTest(unittest.TestCase):
         models.storage.new(ex5)
         models.storage.new(ex6)
         models.storage.new(ex7)
-        models.storage.reload()
+        models.storage.reload( )
         self.assertIn(ex1, models.storage.all().values())
         self.assertIn(ex2, models.storage.all().values())
         self.assertIn(ex3, models.storage.all().values())
@@ -78,6 +78,9 @@ class FileStorageTest(unittest.TestCase):
         self.assertEqual(type(attr), dict)
         self.assertIs(attr, storage._FileStorage__objects)
         
+
+        with self.assertRaises(TypeError):
+            models.storage.reload(None)
 
         
 if __name__ == "__main__":
