@@ -431,7 +431,7 @@ class UpdateTest(unittest.TestCase):
             output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
-            self.assertFalse(HB().onecmd("Amenity.update"))
+            self.assertFalse(HB().onecmd("Amenity.update()"))
             output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
@@ -439,7 +439,7 @@ class UpdateTest(unittest.TestCase):
             output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
-            self.assertFalse(HB().onecmd("Place.update"))
+            self.assertFalse(HB().onecmd("Place.update()"))
             output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:

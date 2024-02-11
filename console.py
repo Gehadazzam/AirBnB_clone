@@ -55,6 +55,8 @@ class HBNBCommand(cmd.Cmd):
                         )))
                         self.onecmd(hack)
                     return hack
+                id_attribute, key_attr = '', ''
+                value_attr = ''
                 if ', ' in id_arg:
                     id_attribute, key_attr, value_attr = id_arg.split(sep=", ")
                 if '"' in id_attribute:
