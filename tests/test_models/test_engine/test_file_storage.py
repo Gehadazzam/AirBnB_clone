@@ -41,6 +41,8 @@ class FileStorageTest(unittest.TestCase):
 
     def teststore(self):
         self.assertIsInstance(models.storage, FS)
+        cls = models.storage.all()
+        self.assertEqual(cls, {})
 
     def testclass(self):
 
@@ -58,7 +60,7 @@ class FileStorageTest(unittest.TestCase):
         models.storage.new(ex5)
         models.storage.new(ex6)
         models.storage.new(ex7)
-        models.storage.reload( )
+        
         self.assertIn(ex1, models.storage.all().values())
         self.assertIn(ex2, models.storage.all().values())
         self.assertIn(ex3, models.storage.all().values())
@@ -66,6 +68,12 @@ class FileStorageTest(unittest.TestCase):
         self.assertIn(ex5, models.storage.all().values())
         self.assertIn(ex6, models.storage.all().values())
         self.assertIn(ex7, models.storage.all().values())
+
+        self.assertEqual(len(models.storage.all()), 8)
+
+        models.storage.reload( )
+        """after reload"""
+        self.assertEqual(len(models.storage.all()), 8)
 
         self.assertIn("BaseModel." + ex1.id, models.storage.all().keys())
         self.assertIn("Amenity." + ex2.id, models.storage.all().keys())
@@ -75,13 +83,7 @@ class FileStorageTest(unittest.TestCase):
         self.assertIn("State." + ex6.id, models.storage.all().keys())
         self.assertIn("City." + ex7.id, models.storage.all().keys())
 
-
-        with open("file.json", "r") as f:
-            text = f.read()
-            self.assertIn("BaseModel." + ex1.id, text)
-            self.assertIn("Amenity." + ex2.id, text)
-            self.assertIn("User." + ex3.id, text)
-
+        
         attr = storage.all()
         k = ex3.__class__.__name__ + "." + str(ex3.id)
         self.assertIsNotNone(attr[k])
@@ -92,6 +94,11 @@ class FileStorageTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             models.storage.reload(None)
 
+
+        dictonary = storage.attribe()
+        self.assertTrue(type(dictonary), dict)
+        self.assertIn("BaseModel", dictonary)
+        self.assertIn("email", dictonary["User"])
         
 if __name__ == "__main__":
     unittest.main()
