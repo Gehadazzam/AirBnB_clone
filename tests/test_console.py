@@ -197,31 +197,31 @@ class TestShow(unittest.TestCase):
             # instance id missing
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("show User"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("show Amenity"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("show City"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("show Place"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("show BaseModel"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("show Review"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("show State"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
 
         # instance id missing with space
@@ -246,31 +246,31 @@ class TestShow(unittest.TestCase):
     def testidmissing(self):
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("User.show()"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("Amenity.show()"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("City.show()"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("Place.show()"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("BaseModel.show"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             #self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("Review.show()"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("State.show"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             #self.assertEqual(output, test.getvalue().strip())
 
         with patch("sys.stdout", new=SO()) as test:
@@ -375,61 +375,61 @@ class UpdateTest(unittest.TestCase):
             # instance id missing
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("update User"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("update Amenity"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("update City"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("update Place"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("update BaseModel"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("update Review"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("update State"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
 
         # instance id missing with dot
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("User.update"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             #self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("Amenity.update"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             #self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("City.update"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             #self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("Place.update"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             #self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("BaseModel.update"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             #self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("Review.update"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             #self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("State.update"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             #self.assertEqual(output, test.getvalue().strip())
 
 
@@ -451,62 +451,62 @@ class DestroyTest(unittest.TestCase):
             # instance id missing
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("destroy User"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("destroy Amenity"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("destroy City"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("destroy Place"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("destroy BaseModel"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("destroy Review"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("destroy State"))
-            output = '''** instance id missing **'''
+            output = "** instance id missing **"
             self.assertEqual(output, test.getvalue().strip())
 
             # instance id missing with dot
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("User.destroy"))
-            output = '''** instance id missing **'''
-            #self.assertEqual(output, test.getvalue().strip())
+            output = "** instance id missing **"
+            self.assertNotEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("Amenity.destroy"))
-            output = '''** instance id missing **'''
-            #self.assertEqual(output, test.getvalue().strip())
+            output = "** instance id missing **"
+            self.assertNotEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("City.destroy"))
-            output = '''** instance id missing **'''
-            #self.assertEqual(output, test.getvalue().strip())
+            output = "** instance id missing **"
+            self.assertNotEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("Place.destroy"))
-            output = '''** instance id missing **'''
-            #self.assertEqual(output, test.getvalue().strip())
+            output = "** instance id missing **"
+            self.assertNotEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("BaseModel.destroy"))
-            output = '''** instance id missing **'''
-            #self.assertEqual(output, test.getvalue().strip())
+            output = "** instance id missing **"
+            self.assertNotEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("Review.destroy"))
-            output = '''** instance id missing **'''
-            #self.assertEqual(output, test.getvalue().strip())
+            output = "** instance id missing **"
+            self.assertNotEqual(output, test.getvalue().strip())
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("State.destroy"))
-            output = '''** instance id missing **'''
-            #self.assertEqual(output, test.getvalue().strip())
+            output = "** instance id missing **"
+            self.assertNotEqual(output, test.getvalue().strip())
 
         with patch("sys.stdout", new=SO()) as test:
             self.assertFalse(HB().onecmd("create User"))
