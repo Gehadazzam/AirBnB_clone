@@ -1,0 +1,8 @@
+header
+{
+    height: 70px;
+    border-bottom: 1px #CCCCCC;
+    background-image: url("/AirBnB_clone/web_static/images/logo.png");
+    background-repeat: no-repeat;
+    background-position: 20px;
+}
