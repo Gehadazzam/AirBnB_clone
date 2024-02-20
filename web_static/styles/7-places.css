@@ -9,7 +9,8 @@ article{
     display: inline-block;
     border-radius: 4px;
 }
-h2{
+article {
+    
     font-size: 30px;
     text-align: center;
 }
